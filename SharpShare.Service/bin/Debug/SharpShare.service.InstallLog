@@ -1,0 +1,60 @@
+﻿Installing assembly 'C:\Users\Andrew\Documents\Visual Studio 2010\Projects\SharpShare\SharpShare.Service\bin\Debug\SharpShare.service.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = C:\Users\Andrew\Documents\Visual Studio 2010\Projects\SharpShare\SharpShare.Service\bin\Debug\SharpShare.service.InstallLog
+   assemblypath = C:\Users\Andrew\Documents\Visual Studio 2010\Projects\SharpShare\SharpShare.Service\bin\Debug\SharpShare.service.exe
+Installing service SharpAfp...
+Service SharpAfp has been successfully installed.
+Creating EventLog source SharpAfp in log Application...
+Committing assembly 'C:\Users\Andrew\Documents\Visual Studio 2010\Projects\SharpShare\SharpShare.Service\bin\Debug\SharpShare.service.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = C:\Users\Andrew\Documents\Visual Studio 2010\Projects\SharpShare\SharpShare.Service\bin\Debug\SharpShare.service.InstallLog
+   assemblypath = C:\Users\Andrew\Documents\Visual Studio 2010\Projects\SharpShare\SharpShare.Service\bin\Debug\SharpShare.service.exe
+Installing assembly 'X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Service\bin\Debug\SharpShare.Service.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Service\bin\Debug\SharpShare.Service.InstallLog
+   assemblypath = X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Service\bin\Debug\SharpShare.Service.exe
+Installing service SharpAfp...
+Service SharpAfp has been successfully installed.
+Creating EventLog source SharpAfp in log Application...
+Committing assembly 'X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Service\bin\Debug\SharpShare.Service.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Service\bin\Debug\SharpShare.Service.InstallLog
+   assemblypath = X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Service\bin\Debug\SharpShare.Service.exe
+Installing assembly 'X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Service\bin\Debug\SharpShare.Service.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Service\bin\Debug\SharpShare.Service.InstallLog
+   assemblypath = X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Service\bin\Debug\SharpShare.Service.exe
+Installing service SharpAfp...
+Service SharpAfp has been successfully installed.
+Creating EventLog source SharpAfp in log Application...
+Committing assembly 'X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Service\bin\Debug\SharpShare.Service.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Service\bin\Debug\SharpShare.Service.InstallLog
+   assemblypath = X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Service\bin\Debug\SharpShare.Service.exe
+Uninstalling assembly 'X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Service\bin\Debug\SharpShare.Service.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Service\bin\Debug\SharpShare.Service.InstallLog
+   assemblypath = X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Service\bin\Debug\SharpShare.Service.exe
+Removing EventLog source SharpAfp.
+Service SharpAfp is being removed from the system...
+Service SharpAfp was successfully removed from the system.
+Installing assembly 'X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Service\bin\Debug\SharpShare.Service.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Service\bin\Debug\SharpShare.Service.InstallLog
+   assemblypath = X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Service\bin\Debug\SharpShare.Service.exe
+Installing service SharpShare...
+Service SharpShare has been successfully installed.
+Creating EventLog source SharpShare in log Application...
+Committing assembly 'X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Service\bin\Debug\SharpShare.Service.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Service\bin\Debug\SharpShare.Service.InstallLog
+   assemblypath = X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Service\bin\Debug\SharpShare.Service.exe

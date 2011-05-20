@@ -1,0 +1,9 @@
+X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Console\bin\Debug\SharpShare.Console.exe
+X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Console\bin\Debug\SharpShare.Console.pdb
+X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Console\bin\Debug\SharpShare.Afp.dll
+X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Console\bin\Debug\SharpShare.dll
+X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Console\bin\Debug\SharpShare.Afp.pdb
+X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Console\bin\Debug\SharpShare.pdb
+X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Console\obj\Debug\ResolveAssemblyReference.cache
+X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Console\obj\Debug\SharpShare.Console.exe
+X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Console\obj\Debug\SharpShare.Console.pdb

@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{8797162F-E497-4A4B-A280-6A0B1EB965C0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SharpShare.Afp</RootNamespace>
+    <AssemblyName>SharpShare.Afp</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="ZeroconfService">
+      <HintPath>..\lib\ZeroconfService.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AfpOpenFileInfo.cs" />
+    <Compile Include="AfpServer.cs" />
+    <Compile Include="AfpSession.cs" />
+    <Compile Include="IAfpServer.cs" />
+    <Compile Include="IAfpSession.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Protocol\Types\AfpAccessModes.cs" />
+    <Compile Include="Protocol\Types\AfpAccessRightsBitmap.cs" />
+    <Compile Include="Protocol\Types\AfpFileDirectoryAttributes.cs" />
+    <Compile Include="Protocol\Types\AfpFileDirectoryBitmap.cs" />
+    <Compile Include="Protocol\Handlers\AfpSyncForkRequestHandler.cs" />
+    <Compile Include="Protocol\Handlers\AfpLogoutRequestHandler.cs" />
+    <Compile Include="Protocol\Handlers\AfpMoveRenameRequestHandler.cs" />
+    <Compile Include="Protocol\Handlers\AfpRenameRequestHandler.cs" />
+    <Compile Include="Protocol\AfpRequestHandler.cs" />
+    <Compile Include="Protocol\Types\AfpResultCodes.cs" />
+    <Compile Include="Protocol\Types\AfpServerFlagsBitmap.cs" />
+    <Compile Include="Protocol\Types\AfpSessionTokenTypes.cs" />
+    <Compile Include="Protocol\AfpStream.cs" />
+    <Compile Include="Protocol\AfpTransport.cs" />
+    <Compile Include="Protocol\Types\AfpUams.cs" />
+    <Compile Include="Protocol\Types\AfpVolumeAttributesBitmap.cs" />
+    <Compile Include="Protocol\Types\AfpVolumeBitmap.cs" />
+    <Compile Include="Protocol\Extensions.cs" />
+    <Compile Include="Protocol\Handlers\AfpCloseForkRequestHandler.cs" />
+    <Compile Include="Protocol\Handlers\AfpCloseVolumeRequestHandler.cs" />
+    <Compile Include="Protocol\Handlers\AfpCreateDirectoryRequestHandler.cs" />
+    <Compile Include="Protocol\Handlers\AfpCreateFileRequestHandler.cs" />
+    <Compile Include="Protocol\Handlers\AfpDeleteRequestHandler.cs" />
+    <Compile Include="Protocol\Handlers\AfpDisconnectOldSessionRequestHandler.cs" />
+    <Compile Include="Protocol\Handlers\AfpEnumerateExt2RequestHandler.cs" />
+    <Compile Include="Protocol\Handlers\AfpFlushForkRequestHandler.cs" />
+    <Compile Include="Protocol\Handlers\AfpGetFileDirectoryParamsRequestHandler.cs" />
+    <Compile Include="Protocol\Handlers\AfpGetServerParamsRequestHandler.cs" />
+    <Compile Include="Protocol\Handlers\AfpGetSessionTokenRequestHandler.cs" />
+    <Compile Include="Protocol\Handlers\AfpGetUserInfoRequestHandler.cs" />
+    <Compile Include="Protocol\Handlers\AfpGetVolumeParamsRequestHandler.cs" />
+    <Compile Include="Protocol\Handlers\AfpLoginExtRequestHandler.cs" />
+    <Compile Include="Protocol\Handlers\AfpLoginRequestHandler.cs" />
+    <Compile Include="Protocol\Handlers\AfpOpenForkRequestHandler.cs" />
+    <Compile Include="Protocol\Handlers\AfpOpenVolumeRequestHandler.cs" />
+    <Compile Include="Protocol\Handlers\AfpReadRequestHandler.cs" />
+    <Compile Include="Protocol\Handlers\AfpResolveIDRequestHandler.cs" />
+    <Compile Include="Protocol\Handlers\AfpSetDirectoryParamsRequestHandler.cs" />
+    <Compile Include="Protocol\Handlers\AfpSetFileParamsRequestHandler.cs" />
+    <Compile Include="Protocol\Handlers\AfpSyncDirectoryRequestHandler.cs" />
+    <Compile Include="Protocol\Handlers\AfpWriteExtRequestHandler.cs" />
+    <Compile Include="Protocol\IAfpRequestHandler.cs" />
+    <Compile Include="Protocol\Types\DsiHeader.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SharpShare\SharpShare.csproj">
+      <Project>{DA8EFC89-6B53-491B-99B5-41C942376FAC}</Project>
+      <Name>SharpShare</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Bonjour">
+      <Guid>{18FBED6D-F2B7-4EC8-A4A4-46282E635308}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

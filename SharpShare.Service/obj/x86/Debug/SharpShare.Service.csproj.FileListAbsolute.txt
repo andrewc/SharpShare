@@ -1,0 +1,38 @@
+C:\Users\Andrew\Documents\Visual Studio 2010\Projects\SharpShare\SharpShare.Service\bin\Debug\SharpShare.Service.exe
+C:\Users\Andrew\Documents\Visual Studio 2010\Projects\SharpShare\SharpShare.Service\bin\Debug\SharpShare.Service.pdb
+C:\Users\Andrew\Documents\Visual Studio 2010\Projects\SharpShare\SharpShare.Service\bin\Debug\SharpShare.Afp.dll
+C:\Users\Andrew\Documents\Visual Studio 2010\Projects\SharpShare\SharpShare.Service\bin\Debug\SharpShare.dll
+C:\Users\Andrew\Documents\Visual Studio 2010\Projects\SharpShare\SharpShare.Service\bin\Debug\SharpShare.Afp.pdb
+C:\Users\Andrew\Documents\Visual Studio 2010\Projects\SharpShare\SharpShare.Service\bin\Debug\SharpShare.pdb
+C:\Users\Andrew\Documents\Visual Studio 2010\Projects\SharpShare\SharpShare.Service\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Andrew\Documents\Visual Studio 2010\Projects\SharpShare\SharpShare.Service\obj\x86\Debug\SharpShare.Service.exe
+C:\Users\Andrew\Documents\Visual Studio 2010\Projects\SharpShare\SharpShare.Service\obj\x86\Debug\SharpShare.Service.pdb
+C:\Users\Andrew\Documents\Visual Studio 2010\Projects\SharpShare\SharpShare.Service\obj\x86\Debug\SharpShare.Service.ProjectInstaller.resources
+C:\Users\Andrew\Documents\Visual Studio 2010\Projects\SharpShare\SharpShare.Service\obj\x86\Debug\SharpShare.Service.Service.resources
+C:\Users\Andrew\Documents\Visual Studio 2010\Projects\SharpShare\SharpShare.Service\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\Andrew\Documents\Visual Studio 2010\Projects\SharpShare\SharpShare.Service\obj\x86\Debug\GenerateResource.write.1.tlog
+X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Service\bin\Debug\SharpShare.Service.exe
+X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Service\bin\Debug\SharpShare.Service.pdb
+X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Service\bin\Debug\SharpShare.dll
+X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Service\bin\Debug\SharpShare.pdb
+X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Service\obj\x86\Debug\ResolveAssemblyReference.cache
+X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Service\obj\x86\Debug\SharpShare.Service.ProjectInstaller.resources
+X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Service\obj\x86\Debug\SharpShare.Service.Service.resources
+X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Service\obj\x86\Debug\GenerateResource.read.1.tlog
+X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Service\obj\x86\Debug\GenerateResource.write.1.tlog
+X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Service\obj\x86\Debug\SharpShare.Service.exe
+X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Service\obj\x86\Debug\SharpShare.Service.pdb
+Z:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Service\obj\x86\Debug\ResolveAssemblyReference.cache
+Z:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Service\obj\x86\Debug\SharpShare.Service.ProjectInstaller.resources
+Z:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Service\obj\x86\Debug\SharpShare.Service.Service.resources
+Z:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Service\obj\x86\Debug\GenerateResource.read.1.tlog
+Z:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Service\obj\x86\Debug\GenerateResource.write.1.tlog
+Z:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Service\obj\x86\Debug\SharpShare.Service.exe
+Z:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Service\obj\x86\Debug\SharpShare.Service.pdb
+Z:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Service\bin\Debug\SharpShare.Service.exe
+Z:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Service\bin\Debug\SharpShare.Service.pdb
+Z:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Service\bin\Debug\SharpShare.dll
+Z:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Service\bin\Debug\SharpShare.pdb
+X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Service\bin\Debug\SharpShare.Afp.dll
+X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Service\bin\Debug\SharpShare.Afp.pdb
+X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Service\bin\Debug\ZeroconfService.dll

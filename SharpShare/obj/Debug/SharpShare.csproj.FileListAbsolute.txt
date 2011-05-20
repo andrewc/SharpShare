@@ -1,0 +1,15 @@
+C:\Users\Andrew\Documents\Visual Studio 2010\Projects\SharpShare\SharpShare\bin\Debug\SharpShare.dll
+C:\Users\Andrew\Documents\Visual Studio 2010\Projects\SharpShare\SharpShare\bin\Debug\SharpShare.pdb
+C:\Users\Andrew\Documents\Visual Studio 2010\Projects\SharpShare\SharpShare\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Andrew\Documents\Visual Studio 2010\Projects\SharpShare\SharpShare\obj\Debug\SharpShare.dll
+C:\Users\Andrew\Documents\Visual Studio 2010\Projects\SharpShare\SharpShare\obj\Debug\SharpShare.pdb
+X:\Users\Andrew\Projects\2010\SharpShare\SharpShare\bin\Debug\SharpShare.dll
+X:\Users\Andrew\Projects\2010\SharpShare\SharpShare\bin\Debug\SharpShare.pdb
+X:\Users\Andrew\Projects\2010\SharpShare\SharpShare\obj\Debug\ResolveAssemblyReference.cache
+X:\Users\Andrew\Projects\2010\SharpShare\SharpShare\obj\Debug\SharpShare.dll
+X:\Users\Andrew\Projects\2010\SharpShare\SharpShare\obj\Debug\SharpShare.pdb
+Z:\Users\Andrew\Projects\2010\SharpShare\SharpShare\bin\Debug\SharpShare.dll
+Z:\Users\Andrew\Projects\2010\SharpShare\SharpShare\bin\Debug\SharpShare.pdb
+Z:\Users\Andrew\Projects\2010\SharpShare\SharpShare\obj\Debug\ResolveAssemblyReference.cache
+Z:\Users\Andrew\Projects\2010\SharpShare\SharpShare\obj\Debug\SharpShare.dll
+Z:\Users\Andrew\Projects\2010\SharpShare\SharpShare\obj\Debug\SharpShare.pdb

@@ -1,0 +1,28 @@
+C:\Users\Andrew\Documents\Visual Studio 2010\Projects\SharpShare\SharpShare.Console\bin\Debug\SharpShare.Console.exe
+C:\Users\Andrew\Documents\Visual Studio 2010\Projects\SharpShare\SharpShare.Console\bin\Debug\SharpShare.Console.pdb
+C:\Users\Andrew\Documents\Visual Studio 2010\Projects\SharpShare\SharpShare.Console\bin\Debug\SharpShare.Afp.dll
+C:\Users\Andrew\Documents\Visual Studio 2010\Projects\SharpShare\SharpShare.Console\bin\Debug\SharpShare.dll
+C:\Users\Andrew\Documents\Visual Studio 2010\Projects\SharpShare\SharpShare.Console\bin\Debug\SharpShare.Afp.pdb
+C:\Users\Andrew\Documents\Visual Studio 2010\Projects\SharpShare\SharpShare.Console\bin\Debug\SharpShare.pdb
+C:\Users\Andrew\Documents\Visual Studio 2010\Projects\SharpShare\SharpShare.Console\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Andrew\Documents\Visual Studio 2010\Projects\SharpShare\SharpShare.Console\obj\x86\Debug\SharpShare.Console.exe
+C:\Users\Andrew\Documents\Visual Studio 2010\Projects\SharpShare\SharpShare.Console\obj\x86\Debug\SharpShare.Console.pdb
+X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Console\obj\x86\Debug\SharpShare.Console.exe
+X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Console\obj\x86\Debug\SharpShare.Console.pdb
+X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Console\bin\Debug\SharpShare.Console.exe
+X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Console\bin\Debug\SharpShare.Console.pdb
+X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Console\bin\Debug\SharpShare.Afp.dll
+X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Console\bin\Debug\SharpShare.dll
+X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Console\bin\Debug\SharpShare.Afp.pdb
+X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Console\bin\Debug\SharpShare.pdb
+X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Console\obj\x86\Debug\ResolveAssemblyReference.cache
+Z:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Console\obj\x86\Debug\SharpShare.Console.exe
+Z:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Console\obj\x86\Debug\SharpShare.Console.pdb
+Z:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Console\obj\x86\Debug\ResolveAssemblyReference.cache
+Z:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Console\bin\Debug\SharpShare.Console.exe
+Z:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Console\bin\Debug\SharpShare.Console.pdb
+Z:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Console\bin\Debug\SharpShare.dll
+Z:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Console\bin\Debug\SharpShare.pdb
+Z:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Console\bin\Debug\SharpShare.Afp.dll
+Z:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Console\bin\Debug\SharpShare.Afp.pdb
+X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Console\bin\Debug\ZeroconfService.dll

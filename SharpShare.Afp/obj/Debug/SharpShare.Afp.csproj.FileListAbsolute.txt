@@ -1,0 +1,24 @@
+C:\Users\Andrew\Documents\Visual Studio 2010\Projects\SharpShare\SharpShare.Afp\bin\Debug\SharpShare.Afp.dll
+C:\Users\Andrew\Documents\Visual Studio 2010\Projects\SharpShare\SharpShare.Afp\bin\Debug\SharpShare.Afp.pdb
+C:\Users\Andrew\Documents\Visual Studio 2010\Projects\SharpShare\SharpShare.Afp\bin\Debug\SharpShare.dll
+C:\Users\Andrew\Documents\Visual Studio 2010\Projects\SharpShare\SharpShare.Afp\bin\Debug\SharpShare.pdb
+C:\Users\Andrew\Documents\Visual Studio 2010\Projects\SharpShare\SharpShare.Afp\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Andrew\Documents\Visual Studio 2010\Projects\SharpShare\SharpShare.Afp\obj\Debug\SharpShare.Afp.dll
+C:\Users\Andrew\Documents\Visual Studio 2010\Projects\SharpShare\SharpShare.Afp\obj\Debug\SharpShare.Afp.pdb
+X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Afp\bin\Debug\SharpShare.Afp.dll
+X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Afp\bin\Debug\SharpShare.Afp.pdb
+X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Afp\bin\Debug\SharpShare.dll
+X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Afp\bin\Debug\SharpShare.pdb
+X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Afp\obj\Debug\ResolveAssemblyReference.cache
+X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Afp\obj\Debug\SharpShare.Afp.dll
+X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Afp\obj\Debug\SharpShare.Afp.pdb
+Z:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Afp\obj\Debug\ResolveAssemblyReference.cache
+Z:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Afp\obj\Debug\SharpShare.Afp.dll
+Z:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Afp\obj\Debug\SharpShare.Afp.pdb
+Z:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Afp\bin\Debug\SharpShare.Afp.dll
+Z:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Afp\bin\Debug\SharpShare.Afp.pdb
+Z:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Afp\bin\Debug\SharpShare.dll
+Z:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Afp\bin\Debug\SharpShare.pdb
+X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Afp\bin\Debug\ZeroconfService.dll
+X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Afp\obj\Debug\Interop.Bonjour.dll
+X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Afp\obj\Debug\SharpShare.Afp.csproj.ResolveComReference.cache
