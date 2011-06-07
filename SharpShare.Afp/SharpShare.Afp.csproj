@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -31,8 +32,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto">
+      <HintPath>..\lib\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -44,12 +53,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AfpOpenFileInfo.cs" />
-    <Compile Include="AfpServer.cs" />
-    <Compile Include="AfpSession.cs" />
-    <Compile Include="IAfpServer.cs" />
-    <Compile Include="IAfpSession.cs" />
+    <Compile Include="AfpShareServer.cs" />
+    <Compile Include="AfpShareSession.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Protocol\AfpPropertyCollection.cs" />
+    <Compile Include="Protocol\AfpReplyCache.cs" />
+    <Compile Include="Protocol\Handlers\AfpCatSearchExRequestHandler.cs" />
+    <Compile Include="Protocol\Handlers\AfpLoginContinueRequestHandler.cs" />
+    <Compile Include="Protocol\IAfpFork.cs" />
+    <Compile Include="Protocol\IAfpServer.cs" />
+    <Compile Include="Protocol\IAfpSession.cs" />
+    <Compile Include="Protocol\IAfpVolume.cs" />
+    <Compile Include="Protocol\Security\AfpCleartextUserAuthenticationMethod.cs" />
+    <Compile Include="Protocol\Security\AfpNoUserAuthenticationMethod.cs" />
+    <Compile Include="Protocol\Security\AfpUserAuthenticationResult.cs" />
+    <Compile Include="Protocol\Security\IAfpUserAuthenticationMethod.cs" />
     <Compile Include="Protocol\Types\AfpAccessModes.cs" />
     <Compile Include="Protocol\Types\AfpAccessRightsBitmap.cs" />
     <Compile Include="Protocol\Types\AfpFileDirectoryAttributes.cs" />
@@ -59,12 +77,14 @@
     <Compile Include="Protocol\Handlers\AfpMoveRenameRequestHandler.cs" />
     <Compile Include="Protocol\Handlers\AfpRenameRequestHandler.cs" />
     <Compile Include="Protocol\AfpRequestHandler.cs" />
+    <Compile Include="Protocol\Types\AfpOpenSessionOptions.cs" />
     <Compile Include="Protocol\Types\AfpResultCodes.cs" />
     <Compile Include="Protocol\Types\AfpServerFlagsBitmap.cs" />
     <Compile Include="Protocol\Types\AfpSessionTokenTypes.cs" />
     <Compile Include="Protocol\AfpStream.cs" />
     <Compile Include="Protocol\AfpTransport.cs" />
     <Compile Include="Protocol\Types\AfpUams.cs" />
+    <Compile Include="Protocol\Types\AfpUserBytes.cs" />
     <Compile Include="Protocol\Types\AfpVolumeAttributesBitmap.cs" />
     <Compile Include="Protocol\Types\AfpVolumeBitmap.cs" />
     <Compile Include="Protocol\Extensions.cs" />

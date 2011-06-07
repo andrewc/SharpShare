@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SharpShare.Storage {
     public interface IStorageContainer : IStorageItem {
-        IEnumerable<IStorageItem> ListContents();
+        IQueryable<IStorageItem> Contents();
         IStorageItem Content(string name);
         IStorageContainer CreateContainer(string name);
         IStorageFile CreateFile(string name);

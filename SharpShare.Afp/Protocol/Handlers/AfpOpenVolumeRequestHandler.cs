@@ -12,7 +12,7 @@ namespace SharpShare.Afp.Protocol.Handlers {
             get { return 24; }
         }
 
-        public AfpResultCode Process(AfpSession session, DsiHeader dsiHeader, AfpStream requestStream, AfpStream responseStream) {
+        public AfpResultCode Process(IAfpSession session, DsiHeader dsiHeader, AfpStream requestStream, AfpStream responseStream) {
             requestStream.ReadUInt8(); // Pad
 
             AfpVolumeBitmap volumeBitmap = requestStream.ReadEnum<AfpVolumeBitmap>();
@@ -26,12 +26,14 @@ namespace SharpShare.Afp.Protocol.Handlers {
                 return AfpResultCode.FPObjectNotFound;
             }
 
-            responseStream.WriteEnum(volumeBitmap);
-            responseStream.WriteVolumeInfo(session, provider, volumeBitmap);
+            IAfpVolume volume = session.OpenVolume(provider);
 
-            if (!session.OpenVolumes.Contains(provider)) {
-                session.OpenVolumes.Add(provider);
+            if (volume == null) {
+                return AfpResultCode.FPAccessDenied;
             }
+
+            responseStream.WriteEnum(volumeBitmap);
+            responseStream.WriteVolumeInfo(volume, volumeBitmap);
 
             return AfpResultCode.FPNoErr;
         }

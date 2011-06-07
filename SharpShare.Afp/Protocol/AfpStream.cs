@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using SharpShare.Storage;
+using System.Numerics;
+using SharpShare.Storage.Searching;
 
 namespace SharpShare.Afp.Protocol {
     public sealed class AfpStream {
@@ -28,6 +30,8 @@ namespace SharpShare.Afp.Protocol {
         }
 
         public Stream Stream { get; private set; }
+
+        public bool EOF { get { return (this.Stream.Position == this.Stream.Length); } }
 
         public void BeginMarking() {
             _markBeginnings.Push(this.Stream.Position);
@@ -118,6 +122,18 @@ namespace SharpShare.Afp.Protocol {
             }
         }
 
+        public BigInteger ReadBigInteger(uint size) {
+            byte[] data = this.ReadBytes(size);
+            Array.Reverse(data);
+            BigInteger bigInt = new BigInteger(data);
+            return bigInt;
+        }
+        public void WriteBigInteger(BigInteger bigInt) {
+            byte[] data = bigInt.ToByteArray();
+            Array.Reverse(data);
+            this.WriteBytes(data);
+        }
+
         public long ReadInt64() {
             return (long)this.ReadSignedNumber(8);
         }
@@ -171,11 +187,11 @@ namespace SharpShare.Afp.Protocol {
             this.WriteUInt32(macDate);
         }
 
-        private void WriteStorageItemInfo(AfpSession session, IStorageItem item, AfpFileDirectoryBitmap bitmap) {
+        private void WriteStorageItemInfo(AfpShareSession session, IStorageItem item, AfpFileDirectoryBitmap bitmap) {
 
         }
 
-        public void WriteStorageContainerInfo(AfpSession session, IStorageContainer container, AfpFileDirectoryBitmap bitmap) {
+        public void WriteStorageContainerInfo(IAfpVolume volume, IStorageContainer container, AfpFileDirectoryBitmap bitmap) {
             this.WriteUInt8(1 << 7);
 
             while ((this.Stream.Length % 2) != 0) {
@@ -201,11 +217,11 @@ namespace SharpShare.Afp.Protocol {
                         } else if (container.Parent is IStorageProvider) {
                             this.WriteUInt32(2);
                         } else {
-                            this.WriteUInt32(session.GetNodeIdentifier(container.Parent));
+                            this.WriteUInt32(volume.GetNode(container.Parent));
                         }
                         break;
                     case AfpFileDirectoryBitmap.kFPOffspringCountBit:
-                        this.WriteUInt16((ushort)container.ListContents().Count());
+                        this.WriteUInt16((ushort)container.Contents().Count());
                         break;
                     case AfpFileDirectoryBitmap.kFPCreateDateBit:
                         this.WriteMacintoshDate(container.DateCreated);
@@ -233,7 +249,7 @@ namespace SharpShare.Afp.Protocol {
                         if (container is IStorageProvider) {
                             this.WriteUInt32(2);
                         } else {
-                            this.WriteUInt32(session.GetNodeIdentifier(container));
+                            this.WriteUInt32(volume.GetNode(container));
                         }
                         break;
                     case AfpFileDirectoryBitmap.kFPOwnerIDBit:
@@ -272,7 +288,7 @@ namespace SharpShare.Afp.Protocol {
 
             this.EndMarking();
         }
-        public void WriteStorageFileInfo(AfpSession session, IStorageFile file, AfpFileDirectoryBitmap bitmap, bool writeFileByte = true) {
+        public void WriteStorageFileInfo(IAfpVolume volume, IStorageFile file, AfpFileDirectoryBitmap bitmap, bool writeFileByte = true) {
             if (writeFileByte) {
                 this.WriteUInt8(0);
             }
@@ -300,7 +316,7 @@ namespace SharpShare.Afp.Protocol {
                         } else if (file.Parent is IStorageProvider) {
                             this.WriteUInt32(2);
                         } else {
-                            this.WriteUInt32(session.GetNodeIdentifier(file.Parent));
+                            this.WriteUInt32(volume.GetNode(file.Parent));
                         }
                         break;
                     case AfpFileDirectoryBitmap.kFPCreateDateBit:
@@ -327,7 +343,7 @@ namespace SharpShare.Afp.Protocol {
                         this.WriteBytes(new byte[4]);
                         break;
                     case AfpFileDirectoryBitmap.kFPNodeIDBit:
-                        this.WriteUInt32(session.GetNodeIdentifier(file));
+                        this.WriteUInt32(volume.GetNode(file));
                         break;
                     case AfpFileDirectoryBitmap.kFPAccessRightsBit:
                         this.WriteEnum<AfpAccessRightsBitmap>(AfpAccessRightsBitmap.All);
@@ -369,13 +385,26 @@ namespace SharpShare.Afp.Protocol {
 
             this.EndMarking();
         }
-        public void WriteVolumeInfo(AfpSession session, IStorageProvider provider, AfpVolumeBitmap bitmap) {
+        public void WriteVolumeInfo(IAfpVolume volume, AfpVolumeBitmap bitmap) {
             this.BeginMarking();
 
             foreach (AfpVolumeBitmap flag in bitmap.EnumerateFlags()) {
                 switch (flag) {
                     case AfpVolumeBitmap.kFPVolAttributeBit:
-                        this.WriteEnum<AfpVolumeAttributesBitmap>(AfpVolumeAttributesBitmap.kSupportsUTF8Names | AfpVolumeAttributesBitmap.kSupportsACLs | AfpVolumeAttributesBitmap.kSupportsFileIDs | AfpVolumeAttributesBitmap.kSupportsTMLockSteal);
+                        AfpVolumeAttributesBitmap volBitmap =
+                            AfpVolumeAttributesBitmap.kSupportsUTF8Names |
+                            AfpVolumeAttributesBitmap.kSupportsACLs |
+                            AfpVolumeAttributesBitmap.kSupportsFileIDs |
+                            AfpVolumeAttributesBitmap.kSupportsTMLockSteal;
+
+                        ISearchable searchable = (volume.StorageProvider as ISearchable);
+
+                        if (searchable != null && searchable.SearchProvider != null) {
+                            volBitmap |= AfpVolumeAttributesBitmap.kSupportsCatSearch;
+                        }
+
+                        this.WriteEnum<AfpVolumeAttributesBitmap>(volBitmap);
+
                         break;
                     case AfpVolumeBitmap.kFPVolSignatureBit:
                         this.WriteUInt16(2); // Fixed directory ID
@@ -386,22 +415,22 @@ namespace SharpShare.Afp.Protocol {
                         this.WriteMacintoshDate(DateTime.Now);
                         break;
                     case AfpVolumeBitmap.kFPVolIDBit:
-                        this.WriteUInt16(session.GetVolumeIdentifier(provider));
+                        this.WriteUInt16(volume.Identifier);
                         break;
                     case AfpVolumeBitmap.kFPVolBytesFreeBit:
-                        this.WriteUInt32((uint)provider.AvailableBytes);
+                        this.WriteUInt32((uint)volume.StorageProvider.AvailableBytes);
                         break;
                     case AfpVolumeBitmap.kFPVolBytesTotalBit:
-                        this.WriteUInt32((uint)provider.TotalBytes);
+                        this.WriteUInt32((uint)volume.StorageProvider.TotalBytes);
                         break;
                     case AfpVolumeBitmap.kFPVolNameBit:
                         this.WriteMark("Name");
                         break;
                     case AfpVolumeBitmap.kFPVolExtBytesFreeBit:
-                        this.WriteUInt64(provider.AvailableBytes);
+                        this.WriteUInt64(volume.StorageProvider.AvailableBytes);
                         break;
                     case AfpVolumeBitmap.kFPVolExtBytesTotalBit:
-                        this.WriteUInt64(provider.TotalBytes);
+                        this.WriteUInt64(volume.StorageProvider.TotalBytes);
                         break;
                     case AfpVolumeBitmap.kFPVolBlockSizeBit:
                         this.WriteUInt32(4096); // I guess?
@@ -413,7 +442,7 @@ namespace SharpShare.Afp.Protocol {
                 switch (flag) {
                     case AfpVolumeBitmap.kFPVolNameBit:
                         this.BeginMark("Name");
-                        this.WritePascalString(provider.Name);
+                        this.WritePascalString(volume.StorageProvider.Name);
                         break;
                 }
             }
@@ -556,6 +585,21 @@ namespace SharpShare.Afp.Protocol {
         public void FlipAndWriteBytes(byte[] bytes) {
             Array.Reverse(bytes);
             this.WriteBytes(bytes);
+        }
+
+        public uint ReadPadding(uint alignment = 2) {
+            if (this.EOF) {
+                return 0;
+            }
+
+            uint padBytes = (uint)(this.Stream.Position % alignment);
+            this.ReadBytes((uint)padBytes);
+            return padBytes;
+        }
+        public uint WritePadding(uint alignment = 2) {
+            uint padBytes = ((uint)this.Stream.Length % alignment);
+            this.WriteBytes(new byte[padBytes]);
+            return padBytes;
         }
 
         #endregion

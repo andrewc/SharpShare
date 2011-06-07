@@ -11,17 +11,17 @@ namespace SharpShare.Afp.Protocol.Handlers {
             get { return 4; }
         }
 
-        public AfpResultCode Process(AfpSession session, DsiHeader dsiHeader, AfpStream requestStream, AfpStream responseStream) {
+        public AfpResultCode Process(IAfpSession session, DsiHeader dsiHeader, AfpStream requestStream, AfpStream responseStream) {
             requestStream.ReadUInt8();
             short forkId = requestStream.ReadInt16();
 
-            AfpOpenFileInfo info = session.FindFork(forkId);
+            IAfpFork fork = session.GetFork(forkId);
 
-            if (info == null) {
+            if (fork == null) {
                 return AfpResultCode.FPObjectNotFound;
             }
 
-            session.CloseFork(info);
+            fork.Close();
 
             return AfpResultCode.FPNoErr;
         }

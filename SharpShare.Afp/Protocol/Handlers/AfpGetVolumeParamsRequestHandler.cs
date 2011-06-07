@@ -12,20 +12,20 @@ namespace SharpShare.Afp.Protocol.Handlers {
             get { return 17; }
         }
 
-        public AfpResultCode Process(AfpSession session, DsiHeader dsiHeader, AfpStream requestStream, AfpStream responseStream) {
+        public AfpResultCode Process(IAfpSession session, DsiHeader dsiHeader, AfpStream requestStream, AfpStream responseStream) {
             requestStream.ReadUInt8(); // Pad
 
             ushort volumeId = requestStream.ReadUInt16();
             AfpVolumeBitmap bitmap = requestStream.ReadEnum<AfpVolumeBitmap>();
 
-            IStorageProvider provider = session.GetVolume(volumeId);
+            IAfpVolume volume = session.GetVolume(volumeId);
 
-            if (provider == null) {
+            if (volume == null) {
                 return AfpResultCode.FPObjectNotFound;
             }
 
             responseStream.WriteEnum(bitmap);
-            responseStream.WriteVolumeInfo(session, provider, bitmap);
+            responseStream.WriteVolumeInfo(volume, bitmap);
 
             return AfpResultCode.FPNoErr;
         }

@@ -11,35 +11,30 @@ namespace SharpShare.Afp.Protocol.Handlers {
             get { return 61; }
         }
 
-        public AfpResultCode Process(AfpSession session, DsiHeader dsiHeader, AfpStream requestStream, AfpStream responseStream) {
+        public AfpResultCode Process(IAfpSession session, DsiHeader dsiHeader, AfpStream requestStream, AfpStream responseStream) {
             byte flag = requestStream.ReadUInt8();
             short forkId = requestStream.ReadInt16();
             long offset = requestStream.ReadInt64();
             long reqCount = requestStream.ReadInt64();
 
-            byte[] writeData = requestStream.ReadBytes((uint)reqCount);
+            IAfpFork fork = session.GetFork(forkId);
 
-            AfpOpenFileInfo info = session.FindFork(forkId);
-
-            if (info == null) {
+            if (fork == null) {
                 return AfpResultCode.FPObjectNotFound;
             }
 
-            info.LockStream();
-            try {
-                if (flag == 1) {
-                    // End of the fork
-                    info.Stream.Seek(offset, System.IO.SeekOrigin.End);
-                } else {
-                    info.Stream.Seek(offset, System.IO.SeekOrigin.Begin);
-                }
+            byte[] writeData = requestStream.ReadBytes((uint)reqCount);
+            long position = 0;
 
-                //Console.WriteLine("Write to {0}, offset: {1}, len: {2}", info.File.Name, offset, reqCount);
-                info.Stream.Write(writeData, 0, writeData.Length);
-                responseStream.WriteUInt64((ulong)info.Stream.Position );
-            } finally {
-                info.UnlockStream();
+            if (flag == 1) {
+                // End of the fork
+                position = (fork.DataProvider.Length - offset);
+            } else {
+                position = offset;
             }
+
+            fork.DataProvider.Write(position, writeData, 0, writeData.Length);
+            responseStream.WriteUInt64((ulong)(position + writeData.LongLength));
 
             return AfpResultCode.FPNoErr;
         }

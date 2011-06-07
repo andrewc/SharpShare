@@ -7,3 +7,16 @@ X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Console\bin\Debug\SharpShare
 X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Console\obj\Debug\ResolveAssemblyReference.cache
 X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Console\obj\Debug\SharpShare.Console.exe
 X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Console\obj\Debug\SharpShare.Console.pdb
+Z:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Console\obj\Debug\SharpShare.Console.exe
+Z:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Console\obj\Debug\SharpShare.Console.pdb
+Z:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Console\bin\Debug\SharpShare.Console.exe
+Z:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Console\bin\Debug\SharpShare.Console.pdb
+Z:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Console\bin\Debug\SharpShare.Afp.dll
+Z:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Console\bin\Debug\SharpShare.dll
+Z:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Console\bin\Debug\SharpShare.Afp.pdb
+Z:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Console\bin\Debug\SharpShare.pdb
+Z:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Console\obj\Debug\ResolveAssemblyReference.cache
+Z:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Console\bin\Debug\SharpShare.Management.dll
+Z:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Console\bin\Debug\SharpShare.Management.pdb
+X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Console\bin\Debug\SharpShare.Management.dll
+X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Console\bin\Debug\SharpShare.Management.pdb

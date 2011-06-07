@@ -70,6 +70,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.DirectoryServices.Protocols" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -84,6 +86,10 @@
     <ProjectReference Include="..\SharpShare.Afp\SharpShare.Afp.csproj">
       <Project>{8797162F-E497-4A4B-A280-6A0B1EB965C0}</Project>
       <Name>SharpShare.Afp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SharpShare.Management\SharpShare.Management.csproj">
+      <Project>{7F74CFAC-8CC4-4635-A7E9-CC45D6C1150A}</Project>
+      <Name>SharpShare.Management</Name>
     </ProjectReference>
     <ProjectReference Include="..\SharpShare\SharpShare.csproj">
       <Project>{DA8EFC89-6B53-491B-99B5-41C942376FAC}</Project>

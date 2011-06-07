@@ -40,19 +40,35 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FileSystem\FileSystemStorageContainer.cs" />
-    <Compile Include="FileSystem\FileSystemStorageFile.cs" />
-    <Compile Include="FileSystem\FileSystemStorageItem.cs" />
-    <Compile Include="FileSystem\FileSystemStorageProvider.cs" />
+    <Compile Include="Diagnostics\EntryType.cs" />
+    <Compile Include="Diagnostics\ILogProvider.cs" />
+    <Compile Include="Diagnostics\Log.cs" />
+    <Compile Include="Diagnostics\LogEntry.cs" />
+    <Compile Include="Security\IShareAuthenticationProvider.cs" />
+    <Compile Include="Storage\Exceptions.cs" />
+    <Compile Include="Storage\FileSystem\FileStreamDataProvider.cs" />
+    <Compile Include="Storage\FileSystem\FileSystemSearchProvider.cs" />
+    <Compile Include="Storage\FileSystem\FileSystemStorageContainer.cs" />
+    <Compile Include="Storage\FileSystem\FileSystemStorageFile.cs" />
+    <Compile Include="Storage\FileSystem\FileSystemStorageItem.cs" />
+    <Compile Include="Storage\FileSystem\FileSystemStorageProvider.cs" />
     <Compile Include="IShareServer.cs" />
     <Compile Include="IShareSession.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Storage\IStorageContainer.cs" />
     <Compile Include="Storage\IStorageFile.cs" />
+    <Compile Include="Storage\IStorageDataProvider.cs" />
     <Compile Include="Storage\IStorageItem.cs" />
     <Compile Include="Storage\IStorageProvider.cs" />
+    <Compile Include="Security\StorageAccessRights.cs" />
+    <Compile Include="Security\StorageAccessRule.cs" />
+    <Compile Include="Storage\Searching\ISearchProvider.cs" />
+    <Compile Include="Storage\Searching\ISearchResult.cs" />
+    <Compile Include="Storage\Searching\SearchQuery.cs" />
     <Compile Include="Storage\StorageExtensions.cs" />
+    <Compile Include="Utilities\ConcurrentList.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

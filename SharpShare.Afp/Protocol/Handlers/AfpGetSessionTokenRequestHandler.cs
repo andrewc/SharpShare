@@ -11,20 +11,56 @@ namespace SharpShare.Afp.Protocol.Handlers {
             get { return 64; }
         }
 
-        public AfpResultCode Process(AfpSession session, DsiHeader dsiHeader, AfpStream requestStream, AfpStream responseStream) {
+        public AfpResultCode Process(IAfpSession session, DsiHeader dsiHeader, AfpStream requestStream, AfpStream responseStream) {
             requestStream.ReadUInt8(); // Pad
 
             AfpSessionTokenTypes type = requestStream.ReadEnum<AfpSessionTokenTypes>();
             int idLength = requestStream.ReadInt32();
+            int? timestamp = null;
 
             if (type == AfpSessionTokenTypes.kLoginWithTimeAndID ||
                 type == AfpSessionTokenTypes.kReconnWithTimeAndID) {
-                    int timestamp = requestStream.ReadInt32();
+                timestamp = requestStream.ReadInt32();
             }
 
-            byte[] id = requestStream.ReadBytes((uint)idLength);
+            Guid clientToken = new Guid(requestStream.ReadBytes((uint)idLength));
 
-            byte[] token = session.AssignToken().ToByteArray();
+            switch (type) {
+                case AfpSessionTokenTypes.kLoginWithID: {
+                        // Find existing session and disconnect it.
+                        IAfpSession existingSession = session.Server.FindSession(clientToken, AfpSessionSearchType.ClientIssued);
+
+                        if (existingSession != null) {
+                            existingSession.Close();
+                        }
+
+                        break;
+                    }
+                case AfpSessionTokenTypes.kLoginWithTimeAndID: {
+                        if (!timestamp.HasValue) {
+                            return AfpResultCode.FPParamErr;
+                        }
+
+                        // Find an existing session.
+                        IAfpSession existingSession = session.Server.FindSession(clientToken, AfpSessionSearchType.ClientIssued);
+
+                        if (existingSession != null && existingSession != session) {
+                            // Existing session found, transfer resources if timestamp matches.
+                            if (!existingSession.Timestamp.HasValue || existingSession.Timestamp.Value != timestamp.Value) {
+                                // Timestamp is different, close old session.
+                                existingSession.Close();
+                            }
+                        }
+
+                        break;
+                    }
+            }
+
+            session.Timestamp = timestamp;
+            session.ClientToken = clientToken;
+            session.ServerToken = Guid.NewGuid();
+
+            byte[] token = session.ServerToken.Value.ToByteArray();
 
             responseStream.WriteInt32(token.Length);
             responseStream.WriteBytes(token);

@@ -11,7 +11,7 @@ namespace SharpShare.Afp.Protocol.Handlers {
             get { return 29; }
         }
 
-        public AfpResultCode Process(AfpSession session, DsiHeader dsiHeader, AfpStream requestStream, AfpStream responseStream) {
+        public AfpResultCode Process(IAfpSession session, DsiHeader dsiHeader, AfpStream requestStream, AfpStream responseStream) {
             return AfpResultCode.FPNoErr;
         }
 

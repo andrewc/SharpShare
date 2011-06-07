@@ -8,6 +8,6 @@ namespace SharpShare.Afp.Protocol {
     public interface IAfpRequestHandler {
         byte CommandCode { get; }
 
-        AfpResultCode Process(AfpSession session, DsiHeader dsiHeader, AfpStream requestStream, AfpStream responseStream);
+        AfpResultCode Process(IAfpSession session, DsiHeader dsiHeader, AfpStream requestStream, AfpStream responseStream);
     }
 }

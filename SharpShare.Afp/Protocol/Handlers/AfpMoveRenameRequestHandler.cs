@@ -12,7 +12,7 @@ namespace SharpShare.Afp.Protocol.Handlers {
             get { return 23; }
         }
 
-        public AfpResultCode Process(AfpSession session, DsiHeader dsiHeader, AfpStream requestStream, AfpStream responseStream) {
+        public AfpResultCode Process(IAfpSession session, DsiHeader dsiHeader, AfpStream requestStream, AfpStream responseStream) {
             requestStream.ReadUInt8(); // Padding
 
             ushort volumeId = requestStream.ReadUInt16();
@@ -55,10 +55,10 @@ namespace SharpShare.Afp.Protocol.Handlers {
                     break;
             }
 
-            IStorageProvider provider = session.GetVolume(volumeId);
+            IAfpVolume volume = session.GetVolume(volumeId);
 
-            IStorageContainer sourceContainer = sourceDirId == 2 ? provider : (IStorageContainer)session.GetNode(sourceDirId);
-            IStorageContainer destinationContainer = destDirId == 2 ? provider : (IStorageContainer)session.GetNode(destDirId);
+            IStorageContainer sourceContainer = sourceDirId == 2 ? volume.StorageProvider : (IStorageContainer)volume.GetNode(sourceDirId);
+            IStorageContainer destinationContainer = destDirId == 2 ? volume.StorageProvider : (IStorageContainer)volume.GetNode(destDirId);
 
             if (sourceContainer == null || destinationContainer == null) {
                 return AfpResultCode.FPObjectNotFound;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using SharpShare.Afp.Protocol.Security;
 
 namespace SharpShare.Afp.Protocol.Handlers {
     public class AfpLoginExtRequestHandler : IAfpRequestHandler {
@@ -11,8 +12,7 @@ namespace SharpShare.Afp.Protocol.Handlers {
             get { return 63; }
         }
 
-        public AfpResultCode Process(AfpSession session, DsiHeader dsiHeader, AfpStream requestStream, AfpStream responseStream) {
-            /*
+        public AfpResultCode Process(IAfpSession session, DsiHeader dsiHeader, AfpStream requestStream, AfpStream responseStream) {
             requestStream.ReadUInt8(); // Padding
             requestStream.ReadUInt16(); // Read unused flags
 
@@ -21,15 +21,25 @@ namespace SharpShare.Afp.Protocol.Handlers {
 
             requestStream.ReadUInt8(); // User type always 3
 
-            string userName = requestStream.ReadUTF8StringWithHint();
-            AfpPathType pathType = requestStream.ReadEnum<AfpPathType>();
+            string userName = requestStream.ReadUTF8String();
 
-            string pathName = requestStream.ReadPascalString();
+            requestStream.ReadUInt8();
 
-            requestStream.ReadUInt8(); // Padding
-            */
+            string pathname = requestStream.ReadUTF8String();
 
-            return AfpResultCode.FPNoErr;
+            requestStream.ReadPadding();
+
+            IAfpUserAuthenticationMethod method = session.Server.GetAuthenticationMethod(uam);
+
+            if (method == null) {
+                return AfpResultCode.FPBadUAM;
+            }
+
+            session.AuthenticationMethod = method;
+
+            AfpUserAuthenticationResult result = method.Authenticate(session, version, pathname, userName, requestStream);
+
+            return result.Execute(session, responseStream);
         }
 
         #endregion

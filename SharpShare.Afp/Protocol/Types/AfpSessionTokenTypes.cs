@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 
 namespace SharpShare.Afp.Protocol {
-    [Flags]
     public enum AfpSessionTokenTypes : short {
         kLoginWithoutID = 0,
         kLoginWithID = 1,

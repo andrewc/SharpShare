@@ -12,7 +12,7 @@ namespace SharpShare.Afp.Protocol.Handlers {
             get { return 34; }
         }
 
-        public AfpResultCode Process(AfpSession session, DsiHeader dsiHeader, AfpStream requestStream, AfpStream responseStream) {
+        public AfpResultCode Process(IAfpSession session, DsiHeader dsiHeader, AfpStream requestStream, AfpStream responseStream) {
             requestStream.ReadUInt8(); // Pad
 
             ushort volumeId = requestStream.ReadUInt16();
@@ -32,22 +32,22 @@ namespace SharpShare.Afp.Protocol.Handlers {
                     break;
             }
 
-            IStorageProvider provider = session.GetVolume(volumeId);
+            IAfpVolume volume = session.GetVolume(volumeId);
 
-            if (provider == null) {
+            if (volume == null) {
                 return AfpResultCode.FPObjectNotFound;
             }
 
             IStorageContainer container = null;
 
             if (directoryID == 2) {
-                container = provider;
+                container = volume.StorageProvider;
             } else if (directoryID == 1) {
-                if (pathname == provider.Name) {
-                    container = provider;
+                if (pathname == volume.StorageProvider.Name) {
+                    container = volume.StorageProvider;
                 }
             } else {
-                container = session.GetNode(directoryID) as IStorageContainer;
+                container = volume.GetNode(directoryID) as IStorageContainer;
             }
 
             if (container == null) {
@@ -74,9 +74,9 @@ namespace SharpShare.Afp.Protocol.Handlers {
             responseStream.WriteEnum(directoryBitmap);
 
             if (item is IStorageContainer) {
-                responseStream.WriteStorageContainerInfo(session, (IStorageContainer)item, directoryBitmap);
+                responseStream.WriteStorageContainerInfo(volume, (IStorageContainer)item, directoryBitmap);
             } else {
-                responseStream.WriteStorageFileInfo(session, (IStorageFile)item, fileBitmap);
+                responseStream.WriteStorageFileInfo(volume, (IStorageFile)item, fileBitmap);
             }
 
             return AfpResultCode.FPNoErr;

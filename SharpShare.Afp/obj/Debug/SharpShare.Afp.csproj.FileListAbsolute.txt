@@ -19,6 +19,8 @@ Z:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Afp\bin\Debug\SharpShare.Afp
 Z:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Afp\bin\Debug\SharpShare.Afp.pdb
 Z:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Afp\bin\Debug\SharpShare.dll
 Z:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Afp\bin\Debug\SharpShare.pdb
-X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Afp\bin\Debug\ZeroconfService.dll
 X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Afp\obj\Debug\Interop.Bonjour.dll
 X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Afp\obj\Debug\SharpShare.Afp.csproj.ResolveComReference.cache
+Z:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Afp\obj\Debug\SharpShare.Afp.csproj.ResolveComReference.cache
+Z:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Afp\obj\Debug\Interop.Bonjour.dll
+X:\Users\Andrew\Projects\2010\SharpShare\SharpShare.Afp\bin\Debug\BouncyCastle.Crypto.dll

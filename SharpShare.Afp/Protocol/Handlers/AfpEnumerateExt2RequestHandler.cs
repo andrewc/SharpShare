@@ -12,7 +12,7 @@ namespace SharpShare.Afp.Protocol.Handlers {
             get { return 68; }
         }
 
-        public AfpResultCode Process(AfpSession session, DsiHeader dsiHeader, AfpStream requestStream, AfpStream responseStream) {
+        public AfpResultCode Process(IAfpSession session, DsiHeader dsiHeader, AfpStream requestStream, AfpStream responseStream) {
             requestStream.ReadUInt8(); // Padding
 
             ushort volumeId = requestStream.ReadUInt16();
@@ -37,18 +37,18 @@ namespace SharpShare.Afp.Protocol.Handlers {
                     break;
             }
 
-            IStorageProvider provider = session.GetVolume(volumeId);
+            IAfpVolume volume = session.GetVolume(volumeId);
 
-            if (provider == null) {
+            if (volume == null) {
                 return AfpResultCode.FPObjectNotFound;
             }
 
             IStorageContainer container = null;
 
             if (directoryId == 2) {
-                container = provider;
+                container = volume.StorageProvider;
             } else {
-                container = (IStorageContainer)session.GetNode(directoryId);
+                container = (volume.GetNode(directoryId) as IStorageContainer);
             }
 
             if (container == null) {
@@ -67,14 +67,22 @@ namespace SharpShare.Afp.Protocol.Handlers {
                 return AfpResultCode.FPObjectNotFound;
             }
 
-            var contents = lookAtContainer
-                .ListContents()
-                .Skip(startIndex - 1)
-                .Take(reqCount)
-                .ToList();
+            var useContents = lookAtContainer.Contents();
+
+            if (fileBitmap == 0) {
+                useContents = useContents.OfType<IStorageContainer>();
+            } else if (directoryBitmap == 0) {
+                useContents = useContents.OfType<IStorageFile>();
+            }
+
+            useContents = useContents
+                .Skip(startIndex-1)
+                .Take(reqCount);
+
+            var contents = useContents.ToList();
 
             if (contents.Count == 0) {
-                return AfpResultCode.FPEOFErr;
+                return AfpResultCode.FPObjectNotFound;
             }
 
             responseStream.WriteEnum<AfpFileDirectoryBitmap>(fileBitmap);
@@ -87,14 +95,12 @@ namespace SharpShare.Afp.Protocol.Handlers {
                 resultRecord.WriteUInt16(0); // Length
 
                 if (item is IStorageContainer) {
-                    resultRecord.WriteStorageContainerInfo(session, (IStorageContainer)item, directoryBitmap);
+                    resultRecord.WriteStorageContainerInfo(volume, (IStorageContainer)item, directoryBitmap);
                 } else {
-                    resultRecord.WriteStorageFileInfo(session, (IStorageFile)item, fileBitmap);
+                    resultRecord.WriteStorageFileInfo(volume, (IStorageFile)item, fileBitmap);
                 }
 
-                while ((resultRecord.Stream.Length % 2) != 0) {
-                    resultRecord.WriteUInt8(0);
-                }
+                resultRecord.WritePadding();
 
                 resultRecord.Stream.Position = 0;
                 resultRecord.WriteUInt16((byte)resultRecord.Stream.Length);

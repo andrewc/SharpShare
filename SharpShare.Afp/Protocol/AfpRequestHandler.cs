@@ -9,6 +9,7 @@ namespace SharpShare.Afp.Protocol {
         private static Dictionary<byte, IAfpRequestHandler> _handlers = new Dictionary<byte, IAfpRequestHandler>();
 
         static AfpRequestHandler() {
+            Register(new AfpCatSearchExRequestHandler());
             Register(new AfpLoginRequestHandler());
             Register(new AfpGetServerParamsRequestHandler());
             Register(new AfpGetUserInfoRequestHandler());
@@ -37,6 +38,7 @@ namespace SharpShare.Afp.Protocol {
             Register(new AfpResolveIDRequestHandler());
             Register(new AfpSyncDirectoryRequestHandler());
             Register(new AfpSyncForkRequestHandler());
+            Register(new AfpLoginContinueRequestHandler());
         }
 
         public static void Register(IAfpRequestHandler handler) {

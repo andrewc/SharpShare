@@ -5,19 +5,30 @@ using System.Text;
 using System.Net.Sockets;
 using System.IO;
 using System.Threading;
+using SharpShare.Diagnostics;
+using System.Threading.Tasks;
+using System.Collections.Concurrent;
 
 namespace SharpShare.Afp.Protocol {
-    public sealed class AfpTransport {
+    public delegate void AfpTransportReplyHandler(DsiHeader header, byte[] payload);
+
+    public sealed class AfpTransport : ILogProvider {
         public event EventHandler<AfpTransportCommandReceivedEventArgs> CommandReceived = delegate { };
+        public event EventHandler<AfpTransportCommandReceivedEventArgs> CommandSent = delegate { };
+        public event EventHandler Closed = delegate { };
 
         private byte[] _buffer = new byte[1];
         private MemoryStream _currentHeader = new MemoryStream();
+        private ConcurrentDictionary<ushort, AfpTransportReplyHandler> _replyHandlers = new ConcurrentDictionary<ushort, AfpTransportReplyHandler>();
         private bool _closed;
         private ushort _requestId;
         private object _synclock = new object();
         private Timer _tickleTimer;
+        private string _name;
 
         public AfpTransport(Socket socket) {
+            _name = socket.RemoteEndPoint.ToString();
+
             this.Socket = socket;
             this.BeginReceive();
 
@@ -26,31 +37,22 @@ namespace SharpShare.Afp.Protocol {
 
         private Socket Socket { get; set; }
 
-        private void TickleFired(object state) {
-            if (_closed) {
-                return;
-            }
-
-            this.SendRequest(DsiCommand.Tickle, new byte[0]);
-
-            _tickleTimer.Change(20000, -1);
-        }
         public void SendReply(DsiHeader header, AfpResultCode resultCode, byte[] payload) {
-            lock (_synclock) {
-                AfpStream finalStream = new AfpStream();
+            AfpStream finalStream = new AfpStream();
 
-                header.WriteReply(resultCode, payload, finalStream);
+            DsiHeader replyHeader = header.WriteReply(resultCode, payload, finalStream);
+            this.OnCommandSent(replyHeader, payload);
 
-                byte[] result = finalStream.ToByteArray();
+            byte[] result = finalStream.ToByteArray();
 
-                this.Socket.Send(result);
-            }
+            this.SendBuffer(result);
         }
-        public void SendRequest(DsiCommand command, byte[] payload) {
+
+        public void SendRequest(DsiCommand command, byte[] payload, AfpTransportReplyHandler replyHandler = null) {
             DsiHeader header = new DsiHeader() {
                 command = command,
                 flags = DsiFlags.Request,
-                requestId = ++_requestId,
+                requestId = this.NextRequestId(),
                 errorCodeOrWriteOffset = 0,
                 totalDataLength = (uint)payload.Length
             };
@@ -59,22 +61,59 @@ namespace SharpShare.Afp.Protocol {
             header.Write(stream);
             stream.WriteBytes(payload);
 
-            lock (_synclock) {
-                this.Socket.Send(stream.ToByteArray());
+            if (replyHandler != null) {
+                _replyHandlers[header.requestId] = replyHandler;
             }
+
+            byte[] result = stream.ToByteArray();
+
+            this.SendBuffer(result);
+        }
+
+        private void SendBuffer(byte[] buffer) {
+            this.Socket.BeginSend(buffer, 0, buffer.Length, SocketFlags.None, DataSent, null);
         }
 
         public void Close() {
-            if (_closed) {
-                return;
-            }
+            lock (_synclock) {
+                if (_closed) {
+                    return;
+                }
 
-            _closed = true;
-            this.Socket.Close();
+                Log.Add(this, EntryType.Information, "Connection '{0}' closed.", this);
+
+                _closed = true;
+
+                if (this.Socket.Connected) {
+                    try {
+                        this.Socket.Shutdown(SocketShutdown.Both);
+                    } catch { }
+
+                    try {
+                        this.Socket.Disconnect(false);
+                    } catch { }
+                }
+
+                this.Socket.Dispose();
+
+                this.OnClosed();
+            }
+        }
+
+        private void DataSent(IAsyncResult ar) {
+            try {
+                this.Socket.EndSend(ar);
+            } catch (Exception ex) {
+                Log.Add(this, EntryType.Error, "Transport '{0}' socket send exception: {1}", this, ex);
+            }
         }
         private void DataReceived(IAsyncResult ar) {
             try {
                 lock (_synclock) {
+                    if (_closed) {
+                        return;
+                    }
+
                     int bytesReceived = this.Socket.EndReceive(ar);
 
                     if (bytesReceived == 0) {
@@ -101,9 +140,9 @@ namespace SharpShare.Afp.Protocol {
                             currentOffset += bytesReceived;
                         }
 
-                        new Action(() => {
+                        Task.Factory.StartNew(() => {
                             this.OnCommandReceived(header, payload);
-                        }).BeginInvoke(null, null);
+                        });
 
                         _currentHeader.SetLength(0);
                     }
@@ -119,18 +158,98 @@ namespace SharpShare.Afp.Protocol {
             this.Socket.BeginReceive(_buffer, 0, _buffer.Length, SocketFlags.None, DataReceived, null);
         }
 
-        private void OnCommandReceived(DsiHeader header, byte[] payload) {
-            if (header.command == DsiCommand.Tickle) {
+        private ushort NextRequestId() {
+            lock (_synclock) {
+                ushort id = _requestId;
 
-            } else {
-                AfpTransportCommandReceivedEventArgs args = new AfpTransportCommandReceivedEventArgs(header, payload);
-                try {
-                    CommandReceived(this, args);
-                } catch {
-
+                if (_requestId == ushort.MaxValue) {
+                    _requestId = 0;
+                } else {
+                    _requestId++;
                 }
+
+                return id;
             }
         }
+
+        private void TickleFired(object state) {
+            lock (_synclock) {
+                if (_closed) {
+                    return;
+                }
+
+                try {
+                    this.SendRequest(DsiCommand.Tickle, new byte[0]);
+                } catch { }
+
+                _tickleTimer.Change(20000, -1);
+            }
+        }
+
+        private void OnCommandSent(DsiHeader header, byte[] payload) {
+            AfpTransportCommandReceivedEventArgs args = new AfpTransportCommandReceivedEventArgs(header, payload);
+            try {
+                CommandSent(this, args);
+            } catch { }
+        }
+
+        private void OnCommandReceived(DsiHeader header, byte[] payload) {
+            if (header.flags == DsiFlags.Reply) {
+                // Find reply handler.
+                AfpTransportReplyHandler handler = null;
+
+                if (!_replyHandlers.TryRemove(header.requestId, out handler)) {
+                    // BUG? Request ID flipped in replies from Mac OS X Snow Leopard?
+                    byte[] requestIdData = BitConverter.GetBytes(header.requestId);
+                    Array.Reverse(requestIdData);
+                    header.requestId = BitConverter.ToUInt16(requestIdData, 0);
+
+                    _replyHandlers.TryRemove(header.requestId, out handler);
+                }
+
+                if (handler != null) {
+                    try {
+                        handler(header, payload);
+                    } catch { }
+
+                    return;
+                }
+            }
+
+            switch (header.command) {
+                case DsiCommand.Tickle:
+
+                    break;
+                default: {
+                        AfpTransportCommandReceivedEventArgs args = new AfpTransportCommandReceivedEventArgs(header, payload);
+                        try {
+                            CommandReceived(this, args);
+                        } catch { }
+
+                        break;
+                    }
+            }
+        }
+
+        private void OnClosed() {
+            try {
+                Closed(this, EventArgs.Empty);
+            } catch {
+
+            }
+        }
+
+        public override string ToString() {
+            return _name;
+        }
+
+        #region ILogProvider Members
+
+        string ILogProvider.Name {
+            get { return "AFP Transport"; }
+        }
+
+        #endregion
     }
 
     public sealed class AfpTransportCommandReceivedEventArgs : EventArgs {

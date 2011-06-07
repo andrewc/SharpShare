@@ -27,15 +27,13 @@ namespace SharpShare.Afp.Protocol {
         public uint totalDataLength;
         public uint reserved;
 
-        public void WriteReply(AfpResultCode resultCode, byte[] resultPayload, AfpStream writeToStream) {
+        public DsiHeader WriteReply(AfpResultCode resultCode, byte[] resultPayload, AfpStream writeToStream) {
             DsiHeader replyHeader = this.CreateReply(resultCode, (uint)resultPayload.Length);
-
-    //        if (replyHeader.totalDataLength == 97) {
-      //          System.Diagnostics.Debugger.Break();
-        //    }
 
             replyHeader.Write(writeToStream);
             writeToStream.WriteBytes(resultPayload);
+
+            return replyHeader;
         }
         public DsiHeader CreateReply(Afp.Protocol.AfpResultCode resultCode, uint resultPayloadLength) {
             DsiHeader newHeader = this;

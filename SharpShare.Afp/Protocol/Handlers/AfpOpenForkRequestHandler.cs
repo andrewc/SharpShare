@@ -3,19 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using SharpShare.Storage;
+using SharpShare.Diagnostics;
 
 namespace SharpShare.Afp.Protocol.Handlers {
-    public class AfpOpenForkRequestHandler : IAfpRequestHandler {
+    public class AfpOpenForkRequestHandler : IAfpRequestHandler, ILogProvider {
         #region IAfpRequestHandler Members
 
         public byte CommandCode {
             get { return 26; }
         }
 
-        public AfpResultCode Process(AfpSession session, DsiHeader dsiHeader, AfpStream requestStream, AfpStream responseStream) {
+        public AfpResultCode Process(IAfpSession session, DsiHeader dsiHeader, AfpStream requestStream, AfpStream responseStream) {
             byte flag = requestStream.ReadUInt8();
             ushort volumeId = requestStream.ReadUInt16();
             uint directoryId = requestStream.ReadUInt32();
+
+            bool resourceFork = (flag == 0x80);
+
+            if (resourceFork) {
+                Log.Add(this, EntryType.Error, "Session '{0}' attempted to open resource fork, failing...", session);
+                return AfpResultCode.FPMiscErr;
+            }
 
             AfpFileDirectoryBitmap bitmap = requestStream.ReadEnum<AfpFileDirectoryBitmap>();
             AfpAccessModes accessMode = requestStream.ReadEnum<AfpAccessModes>();
@@ -32,44 +40,48 @@ namespace SharpShare.Afp.Protocol.Handlers {
                     break;
             }
 
-            IStorageProvider provider = session.GetVolume(volumeId);
+            IAfpVolume volume = session.GetVolume(volumeId);
 
-            if (provider == null) {
-                return AfpResultCode.FPObjectNotFound;
+            if (volume == null) {
+                throw new StorageItemNotFoundException();
             }
 
             IStorageContainer container = null;
 
             if (directoryId == 2) {
-                container = provider;
+                container = volume.StorageProvider;
             } else {
-                container = (IStorageContainer)session.GetNode(directoryId);
+                container = (volume.GetNode(directoryId) as IStorageContainer);
             }
 
             if (container == null) {
-                return AfpResultCode.FPObjectNotFound;
+                throw new StorageItemNotFoundException();
             }
 
             IStorageFile file = (container.Content(path) as IStorageFile);
 
             if (file == null) {
-                return AfpResultCode.FPObjectNotFound;
+                throw new StorageItemNotFoundException();
             }
 
-            AfpOpenFileInfo info = session.OpenFork(
-                file, accessMode);
+            IAfpFork info = session.OpenFork(file, accessMode);
 
             if (info == null) {
-                return AfpResultCode.FPDenyConflict;
+                throw new StorageItemNotFoundException();
             }
 
             responseStream.WriteEnum<AfpFileDirectoryBitmap>(bitmap);
             responseStream.WriteInt16(info.Identifier);
-            responseStream.WriteStorageFileInfo(session, file, bitmap);
+            responseStream.WriteStorageFileInfo(volume, file, bitmap);
 
             return AfpResultCode.FPNoErr;
+
         }
 
         #endregion
+
+        string ILogProvider.Name {
+            get { return "AFP Open Fork"; }
+        }
     }
 }

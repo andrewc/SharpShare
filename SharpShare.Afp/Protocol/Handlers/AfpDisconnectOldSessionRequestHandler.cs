@@ -11,7 +11,7 @@ namespace SharpShare.Afp.Protocol.Handlers {
             get { return 65;  }
         }
 
-        public AfpResultCode Process(AfpSession session, DsiHeader dsiHeader, AfpStream requestStream, AfpStream responseStream) {
+        public AfpResultCode Process(IAfpSession session, DsiHeader dsiHeader, AfpStream requestStream, AfpStream responseStream) {
             requestStream.ReadUInt8(); // Padding
             requestStream.ReadInt16(); // Type (always zero)
 
@@ -19,11 +19,14 @@ namespace SharpShare.Afp.Protocol.Handlers {
             byte[] tokenData = requestStream.ReadBytes((uint)tokenLength);
 
             Guid token = new Guid(tokenData);
-            IAfpSession otherSession = session.TransferTo(token);
+
+            IAfpSession otherSession = session.Server.FindSession(token, AfpSessionSearchType.ServerIssued);
 
             if (otherSession == null) {
                 return AfpResultCode.FPMiscErr;
             }
+
+            otherSession.Recover(session);
 
             return AfpResultCode.FPNoErr;
         }

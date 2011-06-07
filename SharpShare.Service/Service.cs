@@ -6,32 +6,45 @@ using System.Diagnostics;
 using System.Linq;
 using System.ServiceProcess;
 using System.Text;
-using SharpShare.FileSystem;
+using SharpShare.Management;
+using SharpShare.Management.Configuration;
 
 namespace SharpShare.Service {
     public partial class Service : ServiceBase {
-        private IShareServer _server;
+        private ShareManager _shareManager = new ShareManager();
 
         public Service() {
             InitializeComponent();
         }
 
         protected override void OnStart(string[] args) {
-            _server = new SharpShare.Afp.AfpServer("Skynet");
+            _shareManager.Start();
 
-            FileSystemStorageProvider provider = new FileSystemStorageProvider("X:\\", "Data");
+            ShareConfiguration dataShare = new FileSystemShareConfiguration() {
+                Name = "Data",
+                Path = "X:\\"
+            };
 
-            _server.AddShare(provider);
+            ShareConfiguration backupShare = new FileSystemShareConfiguration() {
+                Name = "Time Capsule",
+                Path = "X:\\Backups\\Time Capsule"
+            };
 
-            provider = new FileSystemStorageProvider("X:\\Backups\\Time Capsule", "Time Capsule");
+            ServerConfiguration afpServer = new AppleFilingProtocolServerConfiguration() {
+                Name = "Skynet",
+                TimeMachineShares = { "Time Capsule" }
+            };
 
-            _server.AddShare(provider);
+            ServiceConfiguration service = new ServiceConfiguration() {
+                Servers = { afpServer },
+                Shares = { dataShare, backupShare }
+            };
 
-            _server.Start();
+            _shareManager.Configuration = service;
         }
 
         protected override void OnStop() {
-            _server.Stop();
+            _shareManager.Stop();
         }
     }
 }

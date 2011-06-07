@@ -12,7 +12,7 @@ namespace SharpShare.Afp.Protocol.Handlers {
             get { return 7; }
         }
 
-        public AfpResultCode Process(AfpSession session, DsiHeader dsiHeader, AfpStream requestStream, AfpStream responseStream) {
+        public AfpResultCode Process(IAfpSession session, DsiHeader dsiHeader, AfpStream requestStream, AfpStream responseStream) {
             byte hardCreate = requestStream.ReadUInt8();
 
             ushort volumeId = requestStream.ReadUInt16();
@@ -30,22 +30,22 @@ namespace SharpShare.Afp.Protocol.Handlers {
                     break;
             }
 
-            IStorageProvider provider = session.GetVolume(volumeId);
+            IAfpVolume volume = session.GetVolume(volumeId);
 
-            if (provider == null) {
-                return AfpResultCode.FPObjectNotFound;
+            if (volume == null) {
+                throw new StorageItemNotFoundException();
             }
 
             IStorageContainer container = null;
 
             if (directoryId == 2) {
-                container = provider;
+                container = volume.StorageProvider;
             } else {
-                container = (IStorageContainer)session.GetNode(directoryId);
+                container = (volume.GetNode(directoryId) as IStorageContainer);
             }
 
             if (container == null) {
-                return AfpResultCode.FPObjectNotFound;
+                throw new StorageItemNotFoundException();
             }
 
             IStorageFile existingFile = container.Content(pathName) as IStorageFile;

@@ -36,7 +36,7 @@ namespace SharpShare.Afp.Protocol {
         kFPLaunchLimitBit = 0x1000,
 
         /* Bits that apply to everything except where noted: */
-        kFPProDOSInfoBit = 0x2000,      // Deprecated; AFP version 2.2 and earlier
+        //kFPProDOSInfoBit = 0x2000,      // Deprecated; AFP version 2.2 and earlier
         kFPUTF8NameBit = 0x2000,       // AFP version 3.0 and later
         kFPExtRsrcForkLenBit = 0x4000, // Files only; AFP version 3.0 and later
         kFPUnixPrivsBit = 0x8000,       // AFP version 3.0 and later
